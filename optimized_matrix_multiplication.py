@@ -2,7 +2,8 @@ import math
 import threading
 import time
 
-def mul(mat,mat1):
+def mul(mat,mat1,flag):
+    start = time.time()
     gap = int(math.sqrt(len(mat))) 
     
     ranges_mat = []
@@ -45,6 +46,9 @@ def mul(mat,mat1):
 
     # for i in fans:
     #     print(*i)
-    return 1
+    if flag:
+        return fans
+    else:
+        return time.time()-start
 
 # mul([[1,2,3],[4,5,6],[7,8,9]],[[2,3,4],[6,5,4],[9,2,1]])
