@@ -5,10 +5,7 @@ def mul(mat,mat1,flag):
     ans = [[0]*(len(mat1[0])) for i in range(len(mat))]
     for i in range(len(mat)):
         for j in range(len(mat1[0])):
-            sumi = 0
-            for k in range(len(mat1)):
-                sumi += mat[i][k]*mat1[k][j]
-            ans[i][j] = sumi
+            ans[i][j] = sum([mat[i][k]*mat1[k][j] for k in range(len(mat1))])
     if flag:
         return ans
     else:

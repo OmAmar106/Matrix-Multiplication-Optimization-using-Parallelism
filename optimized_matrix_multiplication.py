@@ -50,16 +50,23 @@ import time
 #     else:
 #         return time.time()-start
 
-def mul(mat,mat1,flag):
+def mul(mat,mat1,flag,n=-1):
     start = time.time()
-    n = len(mat)
-    sqrt_n = math.ceil(math.sqrt(n))
-    sqrt_n1 = math.ceil(math.sqrt(len(mat1[0])))
+
+    if n==-1:
+        n1 = math.ceil(math.sqrt(len(mat)))
+        n = len(mat)
+    else:
+        n1 = n
+        n = len(mat)
+        
+    sqrt_n = n1
+    sqrt_n1 = n1
 
     ans = [[0] * len(mat1[0]) for _ in range(len(mat))]
     threads = []
-    row_block = sqrt_n
-    col_block = sqrt_n1
+    row_block = math.ceil(n/sqrt_n)
+    col_block = math.ceil(n/sqrt_n1)
 
     def multiply_block(mat, mat1, ans, row_start, row_end, col_start, col_end, n):
         for i in range(row_start, row_end):
