@@ -2,6 +2,9 @@ import random
 import non_optimized_matrix_multiplication as non_opt
 import optimized_matrix_multiplication as opt
 import strassen
+from collections import defaultdict
+import matplotlib.pyplot as plt
+import os
 
 def func(L):
     for i in L:
@@ -24,53 +27,31 @@ L5 = []
 L6 = []
 L7 = []
 
-for k in range(4,100):
+diffarr = defaultdict(list)
+
+for k in range(6,100):
     L3 = []
     L4 = []
     matA = [[random.randint(1,50) for j in range(k)] for l in range(k)]
     matB = [[random.randint(1,50) for j in range(k)] for l in range(k)]
-    diff = [1,2,int(k**0.25),-1]
-    for j in range(4):    
-        L4.append(opt.mul(matA,matB,False,diff[j]))
+    diff = [2,3,4,5,6,int(k**0.25),int(k**0.5)]
+    for j in range(len(diff)):
+        if j==len(diff)-1:
+            diffarr["N^0.5"].append(opt.mul(matA,matB,False,diff[j]))
+        elif j==len(diff)-2:
+            diffarr["N^0.25"].append(opt.mul(matA,matB,False,diff[j]))
+        else:
+            diffarr[diff[j]].append(opt.mul(matA,matB,False,diff[j]))
     L.append(non_opt.mul(matA,matB,False))
-    L2.append(L4[0])
-    L5.append(L4[1])
-    L6.append(L4[2])
-    L7.append(L4[3])
 
-import matplotlib.pyplot as plt
-plt.plot(L, marker='o', label='Brute')
-plt.plot(L5, marker='o', label='2 Thread')
-plt.legend()
-plt.xlabel('Matrix Size')
-plt.ylabel('Time (seconds)')
-plt.title('Multiplication Time Comparison')
-plt.grid(True)
-plt.show()
-
-plt.plot(L, marker='o', label='Brute')
-plt.plot(L6, marker='o', label='N^(1/4) Threads')
-plt.legend()
-plt.xlabel('Matrix Size')
-plt.ylabel('Time (seconds)')
-plt.title('Multiplication Time Comparison')
-plt.grid(True)
-plt.show()
-
-plt.plot(L, marker='o', label='Brute')
-plt.plot(L7, marker='o', label='N^(1/2) Threads')
-plt.legend()
-plt.xlabel('Matrix Size')
-plt.ylabel('Time (seconds)')
-plt.title('Multiplication Time Comparison')
-plt.grid(True)
-plt.show()
-
-plt.plot(L, marker='o', label='Brute')
-plt.plot(L2, marker='o', label='1 Thread')
-plt.legend()
-plt.xlabel('Matrix Size')
-plt.ylabel('Time (seconds)')
-plt.title('Multiplication Time Comparison')
-plt.grid(True)
-plt.show()
+for j in diffarr:
+    L5 = diffarr[j]
+    plt.plot(L, marker='o', label='Brute')
+    plt.plot(L5, marker='o', label=str(j)+' Thread')
+    plt.legend()
+    plt.xlabel('Matrix Size')
+    plt.ylabel('Time (seconds)')
+    plt.title('Matrix Multiplication Time Comparison')
+    plt.grid(True)
+    plt.savefig(os.curdir+'/Images/'+str(j)+'.png')
+    plt.show()
