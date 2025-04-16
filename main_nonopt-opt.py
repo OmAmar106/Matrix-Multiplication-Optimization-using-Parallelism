@@ -46,12 +46,15 @@ for k in range(6,100):
 
 for j in diffarr:
     L5 = diffarr[j]
-    plt.plot(L, marker='o', label='Brute')
-    plt.plot(L5, marker='o', label=str(j)+' Thread')
+    # plt.plot(L, marker='o', label='Brute')
+    try:
+        s = str(j*j)
+    except:
+        s = j+'^2'
+    plt.plot(L5, marker='o', label=s+' Thread')
     plt.legend()
     plt.xlabel('Matrix Size')
     plt.ylabel('Time (seconds)')
     plt.title('Matrix Multiplication Time Comparison')
     plt.grid(True)
-    plt.savefig(os.curdir+'/Images/'+str(j)+'.png')
     plt.show()
