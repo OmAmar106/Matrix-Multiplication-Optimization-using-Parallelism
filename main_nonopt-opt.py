@@ -46,11 +46,14 @@ for k in range(6,100):
 
 for j in diffarr:
     L5 = diffarr[j]
-    # plt.plot(L, marker='o', label='Brute')
+    plt.plot(L, marker='o', label='Brute')
     try:
         s = str(j*j)
     except:
-        s = j+'^2'
+        if j=='N^0.5':
+            s = 'N'
+        else:
+            s = 'N^0.5'
     plt.plot(L5, marker='o', label=s+' Thread')
     plt.legend()
     plt.xlabel('Matrix Size')
